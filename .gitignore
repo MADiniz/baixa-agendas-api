@@ -1,0 +1,10 @@
+node_modules/
+.idea/
+.vscode/
+build/
+coverage
+.env
+ormconfig.json
+dist
+src/tmp/trace.txt
+
