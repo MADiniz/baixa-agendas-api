@@ -28,7 +28,7 @@ class ReprocessItensService {
         const quantidadeDeIdsEnviados = idsParaUpdateSplited.length;
 
         const quantidades = itemDistributionService.execute(
-            data.quantidadePedida,
+            data.qtd_pedida,
             quantidadeDeIdsEnviados,
         );
 

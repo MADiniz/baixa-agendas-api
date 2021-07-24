@@ -6,5 +6,5 @@ coverage
 .env
 ormconfig.json
 dist
-src/tmp/trace.txt
+tmp/trace.txt
 

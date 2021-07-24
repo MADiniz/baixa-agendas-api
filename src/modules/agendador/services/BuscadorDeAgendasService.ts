@@ -14,8 +14,8 @@ export default class BuscadorDeAgendasService {
         private agendadorDeTarefas: IAgendadorDeTarefas,
     ) { }
 
-    public async execute({ tempo, padrao }: IRequest): Promise<void> {
-        await this.agendadorDeTarefas.agendaTarefa({
+    public execute({ tempo, padrao }: IRequest): void {
+        this.agendadorDeTarefas.agendaTarefa({
             padrao,
             valor: tempo,
         });

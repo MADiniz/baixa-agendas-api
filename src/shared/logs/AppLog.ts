@@ -15,9 +15,8 @@ class AppLog implements ILog {
 
     public async save(date: Date, content: string): Promise<void> {
         const contentLoaded = await this.load();
-        const log = `${DateConverter.paraTexto(
-            date,
-        )} -------------------------------------------------------------------------- ${content}`;
+        // eslint-disable-next-line prettier/prettier
+        const log = `${DateConverter.paraTexto(date)} -------------------------------------------------------------------------- ${content}`;
         return contentLoaded.length === 0
             ? fs.writeFile(logPath.tempFolder, log)
             : fs.appendFile(logPath.tempFolder, `\n${log}`);

@@ -16,8 +16,6 @@ class CreateFilialService {
             numero,
         );
 
-        console.log(findFilialBySameNumero)
-
         if (findFilialBySameNumero) {
             return findFilialBySameNumero;
         }

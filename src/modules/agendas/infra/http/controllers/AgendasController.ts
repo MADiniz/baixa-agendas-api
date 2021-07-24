@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { classToClass } from "class-transformer";
 import { container } from "tsyringe";
 import ListaAgendasService from "@modules/agendas/services/ListaAgendasService";
 import AtualizaAgendaService from "@modules/agendas/services/AtualizaAgendaService";
@@ -23,7 +22,6 @@ export default class AgendasController {
 
         if (agendas) {
             agendas.forEach(agenda => {
-                console.log(agenda.filial);
                 const novaAgenda: IAgenda = {
                     agenda: agenda.nome,
                     // eslint-disable-next-line radix
