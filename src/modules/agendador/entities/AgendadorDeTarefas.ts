@@ -76,9 +76,12 @@ export default class AgendadorDeTarefas implements IAgendadorDeTarefas {
                         agendas: [agendaExterna],
                     });
                 }
-            } catch (err) {
+            } catch (error) {
                 const date = new Date();
-                const log: AppLog = new AppLog(date, err);
+                const log: AppLog = new AppLog(
+                    date,
+                    `Erro durante a execução da tarefa agendada: ${error.name}`,
+                );
             }
         });
 

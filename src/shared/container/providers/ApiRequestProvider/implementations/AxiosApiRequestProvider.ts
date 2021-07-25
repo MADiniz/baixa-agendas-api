@@ -1,4 +1,5 @@
 import AppError from "@shared/errors/AppError";
+import AppLog from "@shared/logs/AppLog";
 import axios from "axios";
 import ICreateRequestDTO from "../dtos/ICreateRequestDTO";
 import IApiRequestProvider from "../models/IApiRequestProvider";
@@ -13,6 +14,8 @@ export default class AxiosApiRequestProvider implements IApiRequestProvider {
             const { data } = await axios.post(url, body);
             return data;
         } catch (error) {
+            const date = new Date();
+            const log = new AppLog(date, error.stack);
             throw new AppError("Request were not successful", 503);
         }
     }
@@ -37,6 +40,8 @@ export default class AxiosApiRequestProvider implements IApiRequestProvider {
 
             return response.data;
         } catch (error) {
+            const date = new Date();
+            const log = new AppLog(date, error.stack);
             throw new AppError("Request were not successful", 503);
         }
     }
