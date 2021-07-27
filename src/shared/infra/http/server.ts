@@ -2,6 +2,8 @@ import express, { Request, Response, NextFunction } from "express";
 import "express-async-errors";
 import "reflect-metadata";
 import "dotenv/config";
+import * as Sentry from "@sentry/node";
+import * as Tracing from "@sentry/tracing";
 import routes from "@shared/infra/http/routes";
 import AgendadorController from "@modules/agendador/controllers/AgendadorController";
 import AppLog from "@shared/logs/AppLog";
@@ -15,9 +17,38 @@ import { errors } from "celebrate";
 
 const app = express();
 
+Sentry.init({
+    dsn: process.env.SENTRY_DSN,
+    integrations: [
+        new Sentry.Integrations.Http({ tracing: true }),
+        new Tracing.Integrations.Express({ app }),
+    ],
+    tracesSampleRate: 1.0,
+});
+
 app.use(cors());
 app.use(express.json());
+
+app.use(Sentry.Handlers.requestHandler());
+app.use(Sentry.Handlers.tracingHandler());
+
 app.use(routes);
+
+app.use(
+    Sentry.Handlers.errorHandler({
+        shouldHandleError(error) {
+            if (
+                error.status === 429 ||
+                error.status === 500 ||
+                error.status === 400
+            ) {
+                return true;
+            }
+            return false;
+        },
+    }),
+);
+
 app.use(errors());
 app.use(
     (
