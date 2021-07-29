@@ -6,6 +6,5 @@ coverage
 .env
 ormconfig.json
 dist
-tmp/*
-!tmp/
+
 
