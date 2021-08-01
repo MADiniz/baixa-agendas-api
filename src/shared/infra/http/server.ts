@@ -29,7 +29,7 @@ Sentry.init({
 app.use(cors());
 app.use(express.json());
 
-app.use(Sentry.Handlers.requestHandler());
+app.use(Sentry.Handlers.requestHandler() as express.RequestHandler);
 app.use(Sentry.Handlers.tracingHandler());
 
 app.use(routes);
@@ -46,7 +46,7 @@ app.use(
             }
             return false;
         },
-    }),
+    }) as express.ErrorRequestHandler,
 );
 
 app.use(errors());
