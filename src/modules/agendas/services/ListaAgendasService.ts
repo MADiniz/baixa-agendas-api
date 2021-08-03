@@ -38,17 +38,17 @@ class ListaAgendasService {
 
         if (codigo === TIPOAGENDA.Processar) {
 
-            const agendasParaProcessar = await this.agendasRepository.findByStatus(0, user.filial_id);
+            const agendasParaProcessar = await this.agendasRepository.findByStatus(0);
 
             if (agendasParaProcessar) {
                 agendasParaProcessar.forEach(agenda => agendas.push(agenda))
             }
 
-        } if (codigo === TIPOAGENDA.Erro) {
+        } else if (codigo === TIPOAGENDA.Erro) {
 
-            const findAgendasErrorSistema = await this.agendasRepository.findByStatus(3, user.filial_id);
+            const findAgendasErrorSistema = await this.agendasRepository.findByStatusEFilial({ status: 3, filial_id: user.filial_id });
 
-            const findAgendasErrorNegocios = await this.agendasRepository.findByStatus(4, user.filial_id);
+            const findAgendasErrorNegocios = await this.agendasRepository.findByStatusEFilial({ status: 4, filial_id: user.filial_id });
 
             if (findAgendasErrorSistema) {
                 findAgendasErrorSistema.forEach(agenda => agendas.push(agenda))

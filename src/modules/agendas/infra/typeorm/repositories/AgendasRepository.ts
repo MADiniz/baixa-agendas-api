@@ -2,6 +2,7 @@ import { getRepository, Repository } from "typeorm";
 import ICreateAgendaDTO from "@modules/agendas/dtos/ICreateAgendaDTO";
 import IAgendasRepository from "@modules/agendas/repositories/IAgendasRepository";
 import Agenda from "@modules/agendas/infra/typeorm/entities/Agenda";
+import IAgendaPorStatus from "@modules/agendas/dtos/IAgendaPorStatus";
 
 export default class AgendasRepository implements IAgendasRepository {
     private ormRepository: Repository<Agenda>;
@@ -24,14 +25,21 @@ export default class AgendasRepository implements IAgendasRepository {
         return this.ormRepository.find();
     }
 
-    public async findByStatus(
-        status: number,
-        filial_id: string,
-    ): Promise<Agenda[] | undefined> {
+    public async findByStatus(status: number): Promise<Agenda[] | undefined> {
         const findAgenda = await this.ormRepository.find({
-            where: { status, filial_id },
+            where: { status },
         });
         return findAgenda;
+    }
+
+    public async findByStatusEFilial({
+        status,
+        filial_id,
+    }: IAgendaPorStatus): Promise<Agenda[] | undefined> {
+        const findAgendaPorStatusEFilial = await this.ormRepository.find({
+            where: { status, filial_id },
+        });
+        return findAgendaPorStatusEFilial;
     }
 
     public async create({
