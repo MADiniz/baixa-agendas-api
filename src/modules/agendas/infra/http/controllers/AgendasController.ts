@@ -5,6 +5,7 @@ import AtualizaAgendaService from "@modules/agendas/services/AtualizaAgendaServi
 import CreateAgendaService from "@modules/agendas/services/CreateAgendaService";
 import CreateFilialService from "@modules/filiais/services/CreateFilialService";
 import IAgenda from "@modules/agendas/dtos/IAgenda";
+import ListaFilialService from "@modules/filiais/services/ListaFilialService";
 
 export default class AgendasController {
     public async read(request: Request, response: Response): Promise<Response> {
@@ -78,6 +79,7 @@ export default class AgendasController {
         response: Response,
     ): Promise<Response> {
         const createFilialService = container.resolve(CreateFilialService);
+        const listaFilialervice = container.resolve(ListaFilialService);
 
         const createAgendaService = container.resolve(CreateAgendaService);
 
@@ -91,16 +93,22 @@ export default class AgendasController {
             filial,
         } = request.body;
 
-        const novaFilial = await createFilialService.execute({
+        let filialDaAgenda = await listaFilialervice.execute({
             numero: codigoFilial,
-            nome: filial,
         });
+
+        if (!filialDaAgenda) {
+            filialDaAgenda = await createFilialService.execute({
+                numero: codigoFilial,
+                nome: filial,
+            });
+        }
 
         const agenda = await createAgendaService.execute({
             nome,
             codigoProduto,
             quantidadePedida,
-            filial_id: novaFilial.id,
+            filial_id: filialDaAgenda.id,
             idsParaUpdate,
             status,
         });

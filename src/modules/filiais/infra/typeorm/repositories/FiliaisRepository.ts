@@ -10,15 +10,20 @@ class FiliaisRepository implements IFiliaisRepository {
         this.ormRepository = getRepository(Filial);
     }
 
+    public async findAll(): Promise<Filial[]> {
+        return this.ormRepository.find();
+    }
+
     public async findById(id: string): Promise<Filial | undefined> {
         const filial = await this.ormRepository.findOne(id);
 
         return filial;
     }
 
-    public async create({ numero }: ICreateFilialDTO): Promise<Filial> {
+    public async create({ nome, numero }: ICreateFilialDTO): Promise<Filial> {
         const filial = this.ormRepository.create({
             numero,
+            nome,
         });
 
         await this.ormRepository.save(filial);
@@ -31,6 +36,16 @@ class FiliaisRepository implements IFiliaisRepository {
         });
 
         return findFilialBySameNumber;
+    }
+
+    public async save(filial: Filial): Promise<Filial> {
+        await this.ormRepository.save(filial);
+
+        return filial;
+    }
+
+    public async delete(id: string): Promise<void> {
+        await this.ormRepository.delete(id);
     }
 }
 

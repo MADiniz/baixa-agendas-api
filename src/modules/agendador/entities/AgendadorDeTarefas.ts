@@ -6,12 +6,15 @@ import CreateAgendaService from "@modules/agendas/services/CreateAgendaService";
 import CreateFilialService from "@modules/filiais/services/CreateFilialService";
 import externalApi from "@config/externalApi";
 import AppLog from "@shared/logs/AppLog";
-import IJob from "../dtos/IJob";
+import ListaFilialService from "@modules/filiais/services/ListaFilialService";
 import IAgendadorDeTarefas from "./IAgendadorDeTarefas";
 
 export default class AgendadorDeTarefas implements IAgendadorDeTarefas {
-    public agendaTarefa({ padrao, valor }: IJob): void {
+    public agendaTarefa(): void {
         const STATUS_PARA_PROCESSAMENTO = 0;
+
+        const CONFIG_TIMER_JOB =
+            process.env.TIMER_JOB_AGENDA_EXTERNA || "0 */10 * * * *";
 
         const configListaAgendasRequest = {
             url: `${externalApi.listaAgendas.url}/${externalApi.listaAgendas.resource}`,
@@ -29,7 +32,7 @@ export default class AgendadorDeTarefas implements IAgendadorDeTarefas {
             },
         };
 
-        const job = new CronJob("0 */10 * * * *", async () => {
+        const job = new CronJob(CONFIG_TIMER_JOB, async () => {
             try {
                 const listaAgendaExternasService = container.resolve(
                     ListaAgendasExternasService,
@@ -47,6 +50,10 @@ export default class AgendadorDeTarefas implements IAgendadorDeTarefas {
 
                 // eslint-disable-next-line no-restricted-syntax
                 for (const agendaExterna of agendasExternas) {
+                    const listaFilialService = container.resolve(
+                        ListaFilialService,
+                    );
+
                     const createFilialService = container.resolve(
                         CreateFilialService,
                     );
@@ -54,11 +61,19 @@ export default class AgendadorDeTarefas implements IAgendadorDeTarefas {
                     const createAgendaService = container.resolve(
                         CreateAgendaService,
                     );
+
                     // eslint-disable-next-line no-await-in-loop
-                    const filial = await createFilialService.execute({
+                    let filial = await listaFilialService.execute({
                         numero: agendaExterna.codigoFilial,
-                        nome: agendaExterna.filial,
                     });
+
+                    if (!filial) {
+                        // eslint-disable-next-line no-await-in-loop
+                        filial = await createFilialService.execute({
+                            numero: agendaExterna.codigoFilial,
+                            nome: agendaExterna.filial,
+                        });
+                    }
 
                     // eslint-disable-next-line no-await-in-loop
                     await createAgendaService.execute({

@@ -18,7 +18,7 @@ describe("BuscadorDeAgendas", () => {
             "agendaTarefa",
         );
 
-        await buscadorDeAgendas.execute({ padrao: "s", tempo: 1 });
+        await buscadorDeAgendas.execute();
 
         expect(agendadorDeTarefas).toHaveBeenCalled();
     });

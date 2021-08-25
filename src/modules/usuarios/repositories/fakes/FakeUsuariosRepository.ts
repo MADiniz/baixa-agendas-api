@@ -7,7 +7,10 @@ export default class FakeUsuariosRepository implements IUsuariosRepository {
     private usuarios: Usuario[] = [];
 
     public async save(usuario: Usuario): Promise<Usuario> {
-        this.usuarios.push(usuario);
+        const findIndex = this.usuarios.findIndex(
+            findUsuario => findUsuario.id === usuario.id,
+        );
+        this.usuarios[findIndex] = usuario;
         return usuario;
     }
 
@@ -44,5 +47,10 @@ export default class FakeUsuariosRepository implements IUsuariosRepository {
 
         await this.usuarios.push(usuario);
         return usuario;
+    }
+
+    public async delete(id: string): Promise<void> {
+        const findIndex = this.usuarios.findIndex(usuario => usuario.id === id);
+        this.usuarios.splice(findIndex, 1);
     }
 }

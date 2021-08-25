@@ -7,6 +7,10 @@ import IAgendasRepository from "../repositories/IAgendasRepository";
 import Agenda from "../infra/typeorm/entities/Agenda";
 import TIPOAGENDA from "../utils/tipoAgenda";
 
+interface IRequest {
+    codigo?: string,
+    user_id: string
+}
 
 @injectable()
 class ListaAgendasService {
@@ -20,11 +24,7 @@ class ListaAgendasService {
         private usuariosRepository: IUsuariosRepository
     ) { }
 
-    public async execute(codigo = 'any', user_id: string): Promise<Agenda[] | undefined> {
-
-        if (!user_id) {
-            throw new AppError("Usuario não informado")
-        }
+    public async execute({ codigo = 'any', user_id }: IRequest): Promise<Agenda[] | undefined> {
 
         const user = await this.usuariosRepository.findById(user_id);
 
@@ -59,7 +59,8 @@ class ListaAgendasService {
             }
 
         } else {
-            agendas.concat(await this.agendasRepository.findAll() as Agenda[]);
+            const findAllAgendas = await this.agendasRepository.findAll();
+            findAllAgendas.map(agenda => agendas.push(agenda));
         }
 
         // eslint-disable-next-line no-restricted-syntax

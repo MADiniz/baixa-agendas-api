@@ -35,12 +35,13 @@ describe("ReprocessItens", () => {
 
         const agenda: IAgenda = {
             agenda: "599 lixos {quebra de seções.}. (Quebras)",
-            codigoDoProduto: 1,
+            cod_produto: 1,
             codigoFilial: "qualquer",
             filial: "qualquer",
             idsParaUpdate: "qualquer",
-            quantidadePedida: 1,
+            qtd_pedida: 1,
             status: 1,
+            cliente: "qualquer",
         };
 
         const response = await reprocessItensService.execute(
@@ -58,12 +59,13 @@ describe("ReprocessItens", () => {
 
         const agenda: IAgenda = {
             agenda: "599 lixos {quebra de seções.}. (Quebras)",
-            codigoDoProduto: 1,
+            cod_produto: 1,
             codigoFilial: "qualquer",
             filial: "qualquer",
             idsParaUpdate: "qualquer",
-            quantidadePedida: 1,
+            qtd_pedida: 1,
             status: 1,
+            cliente: "qualquer",
         };
 
         await expect(
@@ -86,12 +88,13 @@ describe("ReprocessItens", () => {
 
         const agenda: IAgenda = {
             agenda: "599 lixos {quebra de seções.}. (Quebras)",
-            codigoDoProduto: 1,
+            cod_produto: 1,
             codigoFilial: "qualquer",
             filial: "qualquer",
             idsParaUpdate: "qualquer",
-            quantidadePedida: 1,
+            qtd_pedida: 1,
             status: 1,
+            cliente: "qualquer",
         };
 
         await expect(

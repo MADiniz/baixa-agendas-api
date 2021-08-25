@@ -33,10 +33,6 @@ export default class AtualizaAgendaService {
         status
     }: IRequest): Promise<Agenda> {
 
-        if (!id) {
-            throw new AppError("Id não informado");
-        }
-
         const agenda = await this.agendasRepository.findById(id);
 
 

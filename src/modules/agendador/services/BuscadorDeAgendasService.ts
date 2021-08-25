@@ -2,11 +2,6 @@
 import { injectable, inject } from "tsyringe";
 import IAgendadorDeTarefas from "../entities/IAgendadorDeTarefas";
 
-interface IRequest {
-    tempo: number;
-    padrao: string;
-}
-
 @injectable()
 export default class BuscadorDeAgendasService {
     constructor(
@@ -14,10 +9,7 @@ export default class BuscadorDeAgendasService {
         private agendadorDeTarefas: IAgendadorDeTarefas,
     ) { }
 
-    public execute({ tempo, padrao }: IRequest): void {
-        this.agendadorDeTarefas.agendaTarefa({
-            padrao,
-            valor: tempo,
-        });
+    public execute(): void {
+        this.agendadorDeTarefas.agendaTarefa();
     }
 }

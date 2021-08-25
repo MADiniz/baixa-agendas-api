@@ -1,3 +1,4 @@
+import "dotenv/config";
 import AppError from "@shared/errors/AppError";
 import FakeUsuariosRepository from "@modules/usuarios/repositories/fakes/FakeUsuariosRepository";
 import FakeHashProvider from "@modules/usuarios/providers/HashProvider/fakes/FakeHashProvider";

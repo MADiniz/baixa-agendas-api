@@ -2,6 +2,7 @@ import { uuid } from "uuidv4";
 import ICreateAgendaDTO from "@modules/agendas/dtos/ICreateAgendaDTO";
 import IAgendasRepository from "@modules/agendas/repositories/IAgendasRepository";
 import Agenda from "@modules/agendas/infra/typeorm/entities/Agenda";
+import IAgendaPorStatus from "@modules/agendas/dtos/IAgendaPorStatus";
 
 export default class FakeAgendasRepository implements IAgendasRepository {
     private agendas: Agenda[] = [];
@@ -25,6 +26,17 @@ export default class FakeAgendasRepository implements IAgendasRepository {
             agenda => agenda.status === status,
         );
         return findAgenda;
+    }
+
+    public async findByStatusEFilial({
+        status,
+        filial_id,
+    }: IAgendaPorStatus): Promise<Agenda[] | undefined> {
+        const findAgendaPorStatusEFilial = this.agendas.filter(
+            agenda =>
+                agenda.status === status && agenda.filial_id === filial_id,
+        );
+        return findAgendaPorStatusEFilial;
     }
 
     public async create({

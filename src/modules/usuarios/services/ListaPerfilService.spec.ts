@@ -20,11 +20,16 @@ describe("ShowProfile", () => {
     });
 
     it("should be able to show the profile", async () => {
+        const filial = await fakeFiliaisRepository.create({
+            numero: "1234",
+            nome: "filial1",
+        });
+
         const user = await fakeUsuariosRepository.create({
             nome: "Alexandre Magno",
             email: "alexandre@exemplo.com",
             password: "123456",
-            filial_id: "123456",
+            filial_id: filial.id,
         });
 
         const profile = await listaPerfilService.execute({

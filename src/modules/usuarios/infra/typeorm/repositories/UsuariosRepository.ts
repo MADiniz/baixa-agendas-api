@@ -1,6 +1,7 @@
 import { getRepository, Repository } from "typeorm";
 import ICreateUsuarioDTO from "@modules/usuarios/dtos/ICreateUsuarioDTO";
 import IUsuariosRepository from "@modules/usuarios/repositories/IUsuariosRepository";
+import AppError from "@shared/errors/AppError";
 import Usuario from "../entities/Usuario";
 
 export default class UsuariosRepository implements IUsuariosRepository {
@@ -43,5 +44,15 @@ export default class UsuariosRepository implements IUsuariosRepository {
 
         await this.ormRepository.save(usuario);
         return usuario;
+    }
+
+    public async delete(usuario_id: string): Promise<void> {
+        const usuario = await this.ormRepository.findOne(usuario_id);
+
+        if (!usuario) {
+            throw new AppError("Usuario não encontrado");
+        }
+
+        await this.ormRepository.delete(usuario.id);
     }
 }

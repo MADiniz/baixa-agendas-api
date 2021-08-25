@@ -1,6 +1,5 @@
 /* eslint-disable prettier/prettier */
 import { inject, injectable } from "tsyringe";
-import ICreateFilialDTO from "../dtos/ICreateFilialDTO";
 import Filial from "../infra/typeorm/entities/Filial";
 import IFiliaisRepository from "../repositories/IFiliaisRepository";
 
@@ -24,9 +23,7 @@ class ListaFilialService {
             filial = await this.filiaisRepository.findByNumero(
                 numero,
             );
-        }
-
-        if (id) {
+        } else if (id) {
             filial = await this.filiaisRepository.findById(
                 id,
             );

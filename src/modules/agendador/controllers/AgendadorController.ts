@@ -7,6 +7,6 @@ export default class AgendadorController {
             BuscadorDeAgendasService,
         );
 
-        buscadorDeAgendasService.execute({ tempo: 10, padrao: "m" });
+        buscadorDeAgendasService.execute();
     }
 }
