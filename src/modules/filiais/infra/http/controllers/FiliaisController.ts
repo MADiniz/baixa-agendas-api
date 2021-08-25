@@ -34,11 +34,11 @@ export default class FiliaisController {
     ): Promise<Response> {
         const atualizaFilialService = container.resolve(AtualizaFilialService);
 
-        const { filial_id } = request.params;
+        const { id } = request.params;
         const { nome, numero } = request.body;
 
         const filial = await atualizaFilialService.execute({
-            filial_id,
+            filial_id: id,
             nome,
             numero,
         });
