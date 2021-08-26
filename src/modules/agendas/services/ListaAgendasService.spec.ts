@@ -100,6 +100,7 @@ describe("ListaAgendas", () => {
         });
 
         expect(agendas).toEqual([agenda1]);
+        expect(agendas).not.toEqual([agenda2]);
     });
 
     it("should be able list failures agendas", async () => {
