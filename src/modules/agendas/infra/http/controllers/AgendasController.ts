@@ -14,10 +14,10 @@ export default class AgendasController {
         const { status } = request.query;
         const user_id = request.user.id;
 
-        const agendas = await listaAgendaService.execute(
-            status as string,
+        const agendas = await listaAgendaService.execute({
+            codigo: status as string,
             user_id,
-        );
+        });
 
         const agendasParaExibir: IAgenda[] = [];
 
