@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { injectable, inject } from "tsyringe";
+import AppLog from "@shared/logs/AppLog";
 import IFiliaisRepository from "@modules/filiais/repositories/IFiliaisRepository";
 import IUsuariosRepository from "@modules/usuarios/repositories/IUsuariosRepository";
 import AppError from "@shared/errors/AppError";
@@ -38,12 +39,20 @@ class ListaAgendasService {
 
         const user = await this.usuariosRepository.findById(user_id);
 
+
         if (!user) {
             throw new AppError("Usuario não encontrado")
         }
 
+        {
+            const log = new AppLog(new Date(), `código = ${codigo},  user_id ${user.id}`);
+        }
 
         if (codigo === TIPOAGENDA.Processar) {
+
+            {
+                const log = new AppLog(new Date(), `caiu no processar`);
+            }
 
             const agendasParaProcessar = await this.agendasRepository.findByStatus(0);
 
@@ -52,6 +61,10 @@ class ListaAgendasService {
             }
 
         } else if (codigo === TIPOAGENDA.Erro) {
+
+            {
+                const log = new AppLog(new Date(), `caiu nas agendas com erro`);
+            }
 
             const findAgendasErrorSistema = await this.agendasRepository.findByStatusEFilial({ status: 3, filial_id: user.filial_id });
 
@@ -66,6 +79,9 @@ class ListaAgendasService {
             }
 
         } else {
+            {
+                const log = new AppLog(new Date(), `caiu no else`);
+            }
             const findAllAgendas = await this.agendasRepository.findAll();
             findAllAgendas.map(agenda => this.agendas.push(agenda));
         }
