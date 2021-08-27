@@ -49,6 +49,7 @@ export default class AgendasRepository implements IAgendasRepository {
         idsParaUpdate,
         quantidadePedida,
         status,
+        cliente,
     }: ICreateAgendaDTO): Promise<Agenda> {
         const novaAgenda = this.ormRepository.create({
             nome,
@@ -57,6 +58,7 @@ export default class AgendasRepository implements IAgendasRepository {
             idsParaUpdate,
             quantidadePedida,
             status,
+            cliente,
         });
 
         await this.ormRepository.save(novaAgenda);

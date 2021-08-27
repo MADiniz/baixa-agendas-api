@@ -21,6 +21,7 @@ describe("UpdateAgenda", () => {
             idsParaUpdate: "111",
             quantidadePedida: 0,
             status: 0,
+            cliente: "123456",
         });
 
         await atualizaAgendaService.execute({
@@ -31,6 +32,7 @@ describe("UpdateAgenda", () => {
             idsParaUpdate: "111",
             quantidadePedida: 0,
             status: 1,
+            cliente: "654321",
         });
 
         expect(agenda.status).toBe(1);
@@ -44,6 +46,7 @@ describe("UpdateAgenda", () => {
             idsParaUpdate: "111",
             quantidadePedida: 0,
             status: 0,
+            cliente: "123456",
         });
 
         await expect(
@@ -55,6 +58,7 @@ describe("UpdateAgenda", () => {
                 idsParaUpdate: "111",
                 quantidadePedida: 0,
                 status: 1,
+                cliente: "654321",
             }),
         ).rejects.toBeInstanceOf(AppError);
     });

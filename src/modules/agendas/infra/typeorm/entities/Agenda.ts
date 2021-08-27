@@ -27,6 +27,9 @@ export default class Agenda {
     @Column()
     filial_id: string;
 
+    @Column()
+    cliente: string;
+
     @OneToOne(() => Filial)
     @JoinColumn({ name: "filial_id" })
     @Type(() => Filial)

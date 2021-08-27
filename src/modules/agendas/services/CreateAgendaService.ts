@@ -10,6 +10,7 @@ interface IRequest {
     filial_id: string;
     idsParaUpdate: string;
     status: number;
+    cliente: string;
 }
 
 @injectable()
@@ -25,7 +26,8 @@ export default class CreateAgendaService {
         filial_id,
         idsParaUpdate,
         quantidadePedida,
-        status
+        status,
+        cliente,
     }: IRequest): Promise<Agenda> {
 
         const novaAgenda = await this.agendasRepository.create({
@@ -34,7 +36,8 @@ export default class CreateAgendaService {
             filial_id,
             idsParaUpdate,
             quantidadePedida,
-            status
+            status,
+            cliente
         });
 
         return novaAgenda;

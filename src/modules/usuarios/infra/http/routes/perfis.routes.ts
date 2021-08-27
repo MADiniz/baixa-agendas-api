@@ -16,7 +16,7 @@ perfisRoute.put(
             nome: Joi.string(),
             email: Joi.string().email(),
             old_password: Joi.string(),
-            numeroFilial: Joi.string(),
+            idFilial: Joi.string(),
             password: Joi.when("old_password", {
                 is: Joi.exist(),
                 then: Joi.required(),

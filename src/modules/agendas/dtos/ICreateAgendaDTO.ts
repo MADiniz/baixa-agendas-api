@@ -5,4 +5,5 @@ export default interface ICreateAgendaDTO {
     filial_id: string;
     idsParaUpdate: string;
     status: number;
+    cliente: string;
 }

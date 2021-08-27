@@ -32,7 +32,7 @@ export default class AgendasController {
                     idsParaUpdate: agenda.idsParaUpdate,
                     qtd_pedida: agenda.quantidadePedida,
                     status: agenda.status,
-                    cliente: "",
+                    cliente: agenda.cliente || "",
                     id: agenda.id,
                 };
 
@@ -56,6 +56,7 @@ export default class AgendasController {
             codigoFilial,
             idsParaUpdate,
             status,
+            cliente,
         } = request.body;
 
         const atualizaAgendaService = container.resolve(AtualizaAgendaService);
@@ -69,6 +70,7 @@ export default class AgendasController {
             filial,
             idsParaUpdate,
             status,
+            cliente,
         });
 
         return response.json(agendaAtualizada);
@@ -91,6 +93,7 @@ export default class AgendasController {
             status,
             codigoFilial,
             filial,
+            cliente,
         } = request.body;
 
         let filialDaAgenda = await listaFilialervice.execute({
@@ -111,6 +114,7 @@ export default class AgendasController {
             filial_id: filialDaAgenda.id,
             idsParaUpdate,
             status,
+            cliente,
         });
 
         return response.json(agenda);

@@ -8,8 +8,11 @@ export default class FakeAgendasRepository implements IAgendasRepository {
     private agendas: Agenda[] = [];
 
     public async save(agenda: Agenda): Promise<Agenda> {
-        this.agendas.push(agenda);
-        return agenda;
+        const agendaToUpdate = this.agendas.find(
+            findAgenda => findAgenda.id === agenda.id,
+        ) as Agenda;
+        this.agendas.push(agendaToUpdate);
+        return agendaToUpdate;
     }
 
     public async findAll(): Promise<Agenda[]> {
@@ -46,6 +49,7 @@ export default class FakeAgendasRepository implements IAgendasRepository {
         idsParaUpdate,
         quantidadePedida,
         status,
+        cliente,
     }: ICreateAgendaDTO): Promise<Agenda> {
         const novaAgenda = new Agenda();
 
@@ -57,6 +61,7 @@ export default class FakeAgendasRepository implements IAgendasRepository {
             idsParaUpdate,
             quantidadePedida,
             status,
+            cliente,
         });
 
         await this.agendas.push(novaAgenda);

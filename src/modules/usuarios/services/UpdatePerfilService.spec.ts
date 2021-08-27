@@ -139,6 +139,16 @@ describe("UpdatePerfil", () => {
     });
 
     it("should be able to update the filial from an user", async () => {
+        const filial1 = await fakeFiliaisRepository.create({
+            numero: "001",
+            nome: "filial01",
+        });
+
+        const filial2 = await fakeFiliaisRepository.create({
+            numero: "002",
+            nome: "filial02",
+        });
+
         const user = await fakeUsuariosRepository.create({
             nome: "Alexandre Magno de Carvalho",
             email: "alexandremagno@p4pro.com.br",
@@ -152,7 +162,7 @@ describe("UpdatePerfil", () => {
             user_id: user.id,
             nome: user.nome,
             email: user.email,
-            numeroFilial: "123123",
+            filial_id: filial1.id,
         });
 
         expect(user.filial_id).not.toEqual(oldUserFilialId);
@@ -173,5 +183,23 @@ describe("UpdatePerfil", () => {
         });
 
         expect(user.filial_id).toBe("123456");
+    });
+
+    it("should not be able to update the filial from with a filial non-existing", async () => {
+        const user = await fakeUsuariosRepository.create({
+            nome: "Alexandre Magno de Carvalho",
+            email: "alexandremagno@p4pro.com.br",
+            filial_id: "123456",
+            password: "123",
+        });
+
+        await expect(
+            updatePerfilService.execute({
+                user_id: user.id,
+                nome: user.nome,
+                email: user.email,
+                filial_id: "qualquer",
+            }),
+        ).rejects.toBeInstanceOf(AppError);
     });
 });

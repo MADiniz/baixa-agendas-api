@@ -12,7 +12,7 @@ interface IRequest {
     email: string;
     password?: string;
     old_password?: string;
-    numeroFilial?: string
+    filial_id?: string
 }
 
 @injectable()
@@ -34,7 +34,7 @@ export default class UpdatePerfilService {
         email,
         password,
         old_password,
-        numeroFilial,
+        filial_id,
     }: IRequest): Promise<Usuario> {
         const usuario = await this.usuariosRepository.findById(user_id);
 
@@ -75,10 +75,10 @@ export default class UpdatePerfilService {
             usuario.password = await this.hashProvider.generateHash(password);
         }
 
-        if (numeroFilial) {
-            let filial = await this.filiaisRepository.findByNumero(numeroFilial);
+        if (filial_id) {
+            const filial = await this.filiaisRepository.findById(filial_id);
             if (!filial) {
-                filial = await this.filiaisRepository.create({ numero: numeroFilial });
+                throw new AppError("Filial não existente");
             }
             usuario.filial_id = filial.id;
         }

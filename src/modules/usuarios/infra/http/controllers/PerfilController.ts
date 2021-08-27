@@ -10,13 +10,7 @@ export default class PerfilController {
         response: Response,
     ): Promise<Response> {
         const user_id = request.user.id;
-        const {
-            nome,
-            email,
-            old_password,
-            password,
-            numeroFilial,
-        } = request.body;
+        const { nome, email, old_password, password, idFilial } = request.body;
 
         const updatePerfilService = container.resolve(UpdatePerfilService);
 
@@ -26,10 +20,10 @@ export default class PerfilController {
             nome,
             old_password,
             password,
-            numeroFilial,
+            filial_id: idFilial,
         });
 
-        return response.json(user);
+        return response.json(classToClass(user));
     }
 
     public async read(request: Request, response: Response): Promise<Response> {

@@ -13,6 +13,7 @@ interface IRequest {
     filial?: string;
     idsParaUpdate: string;
     status: number;
+    cliente: string;
 }
 
 @injectable()
@@ -30,7 +31,8 @@ export default class AtualizaAgendaService {
         filial,
         idsParaUpdate,
         quantidadePedida,
-        status
+        status,
+        cliente
     }: IRequest): Promise<Agenda> {
 
         const agenda = await this.agendasRepository.findById(id);
@@ -45,6 +47,7 @@ export default class AtualizaAgendaService {
         agenda.idsParaUpdate = idsParaUpdate;
         agenda.quantidadePedida = quantidadePedida;
         agenda.status = status;
+        agenda.cliente = cliente;
 
 
         await this.agendasRepository.save(agenda);

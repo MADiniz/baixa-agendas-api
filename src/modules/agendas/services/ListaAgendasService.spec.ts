@@ -42,6 +42,7 @@ describe("ListaAgendas", () => {
             quantidadePedida: 0,
             status: 0,
             filial_id: "1234",
+            cliente: "1234",
         });
 
         const agenda2 = await agendasRepository.create({
@@ -51,6 +52,7 @@ describe("ListaAgendas", () => {
             quantidadePedida: 0,
             status: 0,
             filial_id: "2345",
+            cliente: "1234",
         });
 
         const agendas = await listaAgendaService.execute({ user_id: user.id });
@@ -83,6 +85,7 @@ describe("ListaAgendas", () => {
             quantidadePedida: 0,
             status: 0,
             filial_id: filial1.id,
+            cliente: "1234",
         });
 
         const agenda2 = await agendasRepository.create({
@@ -92,6 +95,7 @@ describe("ListaAgendas", () => {
             quantidadePedida: 0,
             status: 2,
             filial_id: filial2.id,
+            cliente: "1234",
         });
 
         const agendas = await listaAgendaService.execute({
@@ -128,6 +132,7 @@ describe("ListaAgendas", () => {
             quantidadePedida: 0,
             status: 3,
             filial_id: filial1.id,
+            cliente: "1234",
         });
 
         const agenda2 = await agendasRepository.create({
@@ -137,6 +142,7 @@ describe("ListaAgendas", () => {
             quantidadePedida: 0,
             status: 2,
             filial_id: filial1.id,
+            cliente: "1234",
         });
 
         const agenda3 = await agendasRepository.create({
@@ -146,6 +152,7 @@ describe("ListaAgendas", () => {
             quantidadePedida: 0,
             status: 4,
             filial_id: filial1.id,
+            cliente: "1234",
         });
 
         const agendas = await listaAgendaService.execute({
@@ -164,6 +171,7 @@ describe("ListaAgendas", () => {
             quantidadePedida: 0,
             status: 0,
             filial_id: "1234",
+            cliente: "1234",
         });
 
         const agenda2 = await agendasRepository.create({
@@ -173,6 +181,7 @@ describe("ListaAgendas", () => {
             quantidadePedida: 0,
             status: 0,
             filial_id: "1234",
+            cliente: "1234",
         });
 
         await expect(
